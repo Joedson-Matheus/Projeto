@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Jockey+One&display=swap');
+
+.container{
+    height: 100vh;
+    display: flex;
+}
+.leftContainer{
+    width: 20%;
+  
+    background-color: #FF002E;
+}
+.ritghtContainer{
+    width: 80%;
+   
+    background-color: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.boxForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    
+}
+
+.boxForm>h1{
+    font-size: 80px;
+    color: #FF002E;
+}
+.itemForm{
+    display: flex;
+    flex-direction: column;
+    width: 772px;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+
+}
+.itemForm>input{
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #FF002E;
+    padding: 15px 0;
+    color: beige;
+}
+.itemForm>input::placeholder{
+    font-family: JetBrains Mono, monospace;
+    color: #FF002E;
+}
+
+.itemForm>input[type='submit']{
+    background-color: #D9D9D9;
+    border: none;
+    width: 526px;
+    color: #121212;
+    border-radius: 10px;
+    cursor: pointer;
+}

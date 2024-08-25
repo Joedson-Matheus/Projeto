@@ -1,0 +1,102 @@
+.containerTop{
+    height: 480px;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+.black{
+    background-color: #121212;
+    height: 250px;
+    position: relative;
+}
+.boxNavigation{
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    padding: 0 20px;
+    align-items: center;
+}
+.informMove{
+    padding: 0 40px;
+    display: flex;
+    margin-top: 60px;
+    gap: 20px;
+}
+.boxRight{
+    margin-top: 100px;
+}
+.textSinopse{
+    margin-top: 20px;
+}
+
+.disponibilidade{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 40px;
+}
+.plataformas{
+    gap: 30px;
+    display: flex;
+}
+.plataformas>p{
+    background-color: #121212;
+    color: #cbcbcb;
+    padding: 10px 15px;
+}
+.containerComentarios{
+    margin-top: 20px;
+    padding: 0 40px;
+}
+.boxHeaderComentarios{
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 30px;
+    display: flex;
+}
+.actionAddComentario>a{
+    color: blue;
+}
+.listComentarios{
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.boxComentario{
+   
+    min-height: 100px;
+    background-color: #B6B6B6;
+    display: flex;
+    padding: 15px;
+    padding-right: 30px;
+    border-radius: 10px;
+}
+.leftcomment{
+    display: flex;
+    align-items: center;
+
+}
+.imgFotoUser{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+
+}
+.imgFotoUser>img{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
+.boxLikes{  
+    height: 100%;
+  
+}
+.boxLikes>p{
+    margin-top: 10px;
+}

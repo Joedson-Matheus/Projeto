@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/Accont/Login/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/global.css' %}">
+    <title>Criar conta</title>
+</head>
+
+<body>
+    <section class="container">
+        <div class="leftContainer">
+            <div class="boxImage"></div>
+        </div>
+        <div class="ritghtContainer">
+            <div class="boxForm">
+                <h1>Criar conta</h1>
+                <form method="post" action="{% url 'run_CreateAccont' %}">
+                    {% csrf_token %}
+                    <input type="text" name="nome" id="nome" placeholder="DIGITE SEU NOME" >
+                    <input type="text" name="sobrenome" id="sobrenome" placeholder="DIGITE SEU SOBRENOME" >
+                    <input type="email" name="email" id="email" placeholder="DIGITE SEU EMAIL" >
+                    <input type="password" name="senha" id="senha" placeholder="DIGITE SUA SENHA" >
+                    <input type="password" name="confirmSenha" id="confirmSenha" placeholder="DIGITE SUA SENHA" >
+                    <button type="submit">Criar Conta</button>
+                </form>
+                <p style="color: aliceblue;">Já possui conta ? <a href="{% url 'page_accontLogin' %}" style="color: aqua;">click aqui</a></p>
+                <p style="color: aliceblue;">{{ error }}</p>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
