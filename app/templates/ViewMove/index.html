@@ -13,13 +13,71 @@
     <link rel="stylesheet" href="{% static 'styles/global.css' %}">
     <link rel="stylesheet" href="{% static 'styles/viewMove/style.css' %}">
     <title>{{ filme.titulo }}</title>
+    <style>
+        /* Estilos para o modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            cursor: pointer;
+        }
+
+        /* Estilos básicos do formulário */
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
 </head>
- 
+
+
 <body>
     <section class="containerTop">
         <div class="black">
             <div class="boxNavigation">
-                <a href="{% url 'index' %}">
+                <a href="{% url 'page_home' %}">
                     <span class="material-symbols-outlined" style="position: relative;">
                         arrow_back
                     </span>
@@ -58,7 +116,7 @@
                         <img src="../../../static/imgs/img04.jpg" alt="" width="220px">
                     </div>
                     <div class="textAutor">
-                        <p>Autor: <a href="{% url 'page_viewProfileUser' %}">adrian</a></p>
+                        <p>Autor: <a href="{% url 'page_viewProfileUser' %}">None</a></p>
                     </div>
                 </div>
 
@@ -68,7 +126,9 @@
                     </div>
                     <div class="textSinopse">
                         <h2>Sinopse</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, sit voluptatem repellendus quas porro voluptates cumque unde necessitatibus temporibus iste ut, sapiente dolores aliquid a tempora esse natus maxime quae.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, sit voluptatem repellendus
+                            quas porro voluptates cumque unde necessitatibus temporibus iste ut, sapiente dolores
+                            aliquid a tempora esse natus maxime quae.</p>
                     </div>
                 </div>
                 {% endif %}
@@ -83,7 +143,7 @@
         {% if filme %}
         <div class="plataformas">
             <p>{{ filme.disponibilidade }}</p>
-           
+
         </div>
         {% else %}
         <div class="plataformas">
@@ -99,8 +159,8 @@
         <div class="boxHeaderComentarios">
             <h2>Comentarios</h2>
             <div class="actionAddComentario">
-                {% if user.status_assinatura == 'Critico' %}
-                <a href="#">adicionar comentario</a>
+                {% if user.status_assinatura.nome == 'Critico' %}
+                <button id="openModalBtn" data-url="{% url 'avaliarFilme' filme.id %}">adicionar comentario</button>
                 {% else %}
                 <a href="{% url 'page_planos' %}">Torne-se um critico para adicionar suas avaliações</a>
                 {% endif %}
@@ -108,75 +168,131 @@
         </div>
         <div>
             <ul class="listComentarios">
+                {% for avaliacao in avaliacoes %}
                 <li class="boxComentario">
                     <div class="leftcomment">
                         <div style="width: 100px;">
                             <div class="imgFotoUser">
-                                <img src="../../../static/imgs/img01.jpg" alt="fotouser">
+                                <img src="{{ avaliacao.usuario.foto_perfil.url }}" alt="fotouser">
                             </div>
                         </div>
-                     
+
                         <div class="textComentarioUser">
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vero tempora assumenda
-                                dolore harum facere deleniti impedit exercitationem sequi veniam similique a mollitia
-                                sapiente accusantium, laboriosam atque cumque itaque quia?</p>
+                            <h4>{{ avaliacao.filme.titulo }}</h4>
+                            <p>{{ avaliacao.comentario }}</p>
                         </div>
                     </div>
                     <div class="boxLikes">
                         <span class="material-symbols-outlined" style="position: relative; color: #121212;">
                             favorite
                         </span>
-                        <p>342</p>
+                        <p>{{ avaliacao.likes }}</p>
                     </div>
                 </li>
-                <li class="boxComentario">
-                    <div class="leftcomment">
-                        <div style="width: 100px;">
-                            <div class="imgFotoUser">
-                                <img src="../../../static/imgs/img01.jpg" alt="fotouser">
-                            </div>
-                        </div>
-                     
-                        <div class="textComentarioUser">
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vero tempora assumenda
-                                dolore harum facere deleniti impedit exercitationem sequi veniam similique a mollitia
-                                sapiente accusantium, laboriosam atque cumque itaque quia?</p>
-                        </div>
-                    </div>
-                    <div class="boxLikes">
-                        <span class="material-symbols-outlined" style="position: relative; color: #121212;">
-                            favorite
-                        </span>
-                        <p>342</p>
-                    </div>
-                </li>
-                <li class="boxComentario">
-                    <div class="leftcomment">
-                        <div style="width: 100px;">
-                            <div class="imgFotoUser">
-                                <img src="../../../static/imgs/img01.jpg" alt="fotouser">
-                            </div>
-                        </div>
-                     
-                        <div class="textComentarioUser">
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vero tempora assumenda
-                                dolore harum facere deleniti impedit exercitationem sequi veniam similique a mollitia
-                                sapiente accusantium, laboriosam atque cumque itaque quia?</p>
-                        </div>
-                    </div>
-                    <div class="boxLikes">
-                        <span class="material-symbols-outlined" style="position: relative; color: #121212;">
-                            favorite
-                        </span>
-                        <p>342</p>
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </section>
     <section class="boxBottomViewMore">
         <p>Ver mais</p>
     </section>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="feedbackForm" method="post">
+                {% csrf_token %}
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="comment">Comentário:</label>
+                <textarea id="comment" name="comment" rows="4" required></textarea>
+
+                <label for="rating">Avaliação (1-5):</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
 </body>
+
+<script>
+    
+    // Obtendo elementos do DOM
+    const modal = document.getElementById("myModal");
+    const btn = document.getElementById("openModalBtn");
+    const span = document.getElementsByClassName("close")[0];
+
+    // Função para abrir o modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // Função para fechar o modal ao clicar no 'x'
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // Fechar o modal ao clicar fora da área do conteúdo
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Manipulando o envio do formulário
+    document.getElementById("feedbackForm").onsubmit = async function (event) {
+        event.preventDefault();
+
+        const title = document.getElementById("title").value;
+        const comment = document.getElementById("comment").value;
+        const rating = document.getElementById("rating").value;
+
+        // Pegando a URL do atributo data-url
+        const url = btn.getAttribute("data-url");
+
+        // Enviando os dados via POST com fetch
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken(), // Função para pegar o CSRF token
+                },
+                body: JSON.stringify({
+                    title: title,
+                    comment: comment,
+                    rating: rating,
+                }),
+            });
+
+            if (response.ok) {
+                console.log("Dados enviados com sucesso!");
+            } else {
+                console.error("Erro ao enviar os dados.");
+            }
+
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+
+        modal.style.display = "none"; // Fechar o modal após o envio
+    };
+
+    // Função para obter o CSRF token do cookie (pode ajustar conforme necessário)
+    function getCSRFToken() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith('csrftoken=')) {
+                return cookie.split('=')[1];
+            }
+        }
+        return '';
+    }
+
+
+</script>
 
 </html>

@@ -25,6 +25,7 @@
     margin-top: 60px;
     gap: 20px;
 }
+.leftcomment
 .boxRight{
     margin-top: 100px;
 }
@@ -80,6 +81,8 @@
 .leftcomment{
     display: flex;
     align-items: center;
+    width: 100%;
+
 
 }
 .imgFotoUser{
@@ -99,4 +102,6 @@
 }
 .boxLikes>p{
     margin-top: 10px;
+    text-align: end;
+    width: 30px;
 }

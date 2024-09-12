@@ -10,8 +10,12 @@ urlpatterns = [
     path('page_accontCreate/', views.page_accontCreate, name='page_accontCreate'),
     path('home/', views.page_home, name='page_home'),
     path('filme/<int:id>', views.page_move, name='page_move'),
+    path('avaliarFilme/<int:id>', views.avaliarFilme, name='avaliarFilme'),
     path('planos/', views.page_planos, name='page_planos'),
+    path('updatePlano/<int:id>', views.updatePlano, name='updatePlano'),
+    
     path('perfil/', views.page_profileUser, name='page_profileUser'),
+    
     path('ver-perfil/', views.page_viewProfileUser, name='page_viewProfileUser'),
     path('login-acao/', views.run_accontLogin, name='run_accontLogin'),
     path('create-acao/', views.run_CreateAccont, name='run_CreateAccont'),

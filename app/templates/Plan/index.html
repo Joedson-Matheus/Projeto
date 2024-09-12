@@ -22,28 +22,17 @@
     <section class="header" style="width: 100%; height: 20vh; display: flex; flex-direction: column; align-items: center;">
         <h1 style="font-size:80px ;">Seja um membro</h1>
         <p style="color: #fff;">Adquira um plano</p>
-    </section>
+    </section> 
     <section class="cantainerPlans" style="width: 100%; height: 60vh; display: flex; align-items: center; justify-content: center; margin-top: 70px;">
         <ul style="display: flex; gap: 40px; padding: 0 40px;">
+            {% for plano in planos %}
             <li style="width: 300px; height: 470px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <a href="#" style="width: 100%; height: 400px;background-color: rgba(255, 255, 255, 0.3) ; padding: 0 10px; display: flex; align-items: center; justify-content: center; color: #fff;">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio culpa minus laudantium molestias officiis asperiores. Officiis doloribus, mol
+                <a href="{% url 'updatePlano' plano.id %}" style="width: 100%; height: 400px;background-color: rgba(255, 255, 255, 0.3) ; padding: 0 10px; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                   {{ plano.descricao }}
                 </a>
-                <p style="color: #fff; font-weight: bold;">Básico</p>
+                <p style="color: #fff; font-weight: bold;">{{ plano.nome }}</p>
             </li>
-            <li style="width: 300px; height: 470px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <a href="#" style="width: 100%; height: 400px;background-color: rgba(255, 0, 46, 0.5) ; padding: 0 10px; display: flex; align-items: center; justify-content: center; color: #fff;">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio culpa minus laudantium molestias officiis asperiores. Officiis doloribus, mol
-                </a>
-                <p style="color: #fff; font-weight: bold;">Popular</p>
-            </li>
-            
-            <li style="width: 300px; height: 470px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <a href="#" style="width: 100%; height: 400px;background-color: rgba(255, 255, 255, 0.3) ; padding: 0 10px; display: flex; align-items: center; justify-content: center; color: #fff;">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio culpa minus laudantium molestias officiis asperiores. Officiis doloribus, mol
-                </a>
-                <p style="color: #fff; font-weight: bold;">Avançado</p>
-            </li>
+            {% endfor %}
             
         </ul>
     </section>

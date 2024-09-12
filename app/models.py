@@ -51,7 +51,7 @@ class ProfileUser(AbstractBaseUser, PermissionsMixin):
     nome = models.CharField(max_length=20, default='Nome')
     sobrenome = models.CharField(max_length=20, default='Sobrenome')
     email = models.EmailField(unique=True)
-    foto_perfil = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    foto_perfil = models.ImageField(upload_to=user_directory_path, blank=True, null=True, default='default_images/default_profile.webp')
     status_assinatura = models.ForeignKey(Plano, null=True, blank=True, on_delete=models.SET_NULL)
     pontos = models.IntegerField(default=0)
     seguindo = models.ManyToManyField('self', through='Seguir', symmetrical=False, related_name='seguidores')

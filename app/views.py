@@ -6,8 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.urls import reverse
 from .forms import UserCreationForm
-
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 #-------------- REDIRECIONAMENTOS ----------------#
 
@@ -33,6 +34,7 @@ def page_home(request):
 
     # Pegue os dados do usuário autenticado
     usuario = request.user
+    request.session['id_usuario'] = usuario.id
     filmes = Filme.objects.all()
 
     # Pode adicionar mais dados se necessário
@@ -46,21 +48,43 @@ def page_home(request):
     
 #-------------- PARA PAGINA DE INFORMAÇÕES DO FILME ----------------#
 def page_move(request,id):
+    
     filme = Filme.objects.get(id=id)
+    avaliacoes = Avaliacao.objects.filter(filme=filme)
+    request.session['filme_id'] = id
+
     context = {
-         'filme': filme
+        'filme': filme,
+        'avaliacoes': avaliacoes
     }
     return render(request, 'ViewMove/index.html', context)
+ 
 
 #-------------- PARA PAGINA DE PLANOS ----------------#
 def page_planos(request):
     planos = Plano.objects.all()
+    
+    filme_id = request.session.get('filme_id')
+    if filme_id:
+        filme = Filme.objects.get(id=filme_id)
+    else:
+        filme = None
 
     context = {
-        'planos': planos
+        'planos': planos,
+        'filme': filme
     }
 
     return render(request, 'Plan/index.html', context)
+
+#-------------- PARA PAGINA DE ATUALIZAR PLANOS ----------------#
+
+def updatePlano(request,id):
+    id_user = request.session.get('id_usuario')
+    ProfileUser.objects.filter(id=id_user).update(status_assinatura=id)
+
+    return redirect('page_move', id=id) 
+
 
 #-------------- PARA PAGINA DE PERFIL DO USUARIO ----------------#
 def page_profileUser(request):
@@ -105,7 +129,7 @@ def run_CreateAccont(request):
         sobrenome = request.POST.get('sobrenome')
         email = request.POST.get('email')
         password = request.POST.get('password')
-
+ 
         get_value_basic = Plano.objects.get(nome='Básico')
 
         # Cria  um novo usuário
@@ -125,6 +149,35 @@ def run_CreateAccont(request):
 
 #-------------- CRIAÇÕES ----------------#
 # Aqui você pode adicionar funções para criar novos recursos
+@csrf_exempt
+def avaliarFilme(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+            comment = data.get('comment')
+            rating = data.get('rating')
+            filme = Filme.objects.get(id=id)
+            id_user = request.session.get('id_usuario')
+            
+            # Verifica se o usuário está logado
+            if id_user is None:
+                return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
+            
+            # Cria a avaliação
+            Avaliacao.objects.create(
+                filme=filme,
+                usuario_id=id_user,  # Supondo que o campo `usuario` seja um FK para o modelo `User`
+                titulo=title,
+                comentario=comment,
+                nota=rating
+            )
+            return JsonResponse({'message': 'Avaliação criada com sucesso!'}, status=201)
+        
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    
+    return redirect('page_move', id=id)
 
 #-------------- MODIFICAÇÕES ----------------#
 # Aqui você pode adicionar funções para modificar recursos existentes

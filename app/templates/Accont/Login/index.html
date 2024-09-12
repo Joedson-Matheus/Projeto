@@ -20,8 +20,8 @@
                 <h1>Efetuar login</h1>
                 <form action="{% url 'run_accontLogin' %}" method="post" class="itemForm">
                     {% csrf_token %}
-                    <input type="text" name="email" id="email" placeholder="DIGITE SEU EMAIL" >
-                    <input type="password" name="senha" id="senha" placeholder="DIGITE SUA SENHA" >
+                    <input type="text" name="email" id="email" placeholder="DIGITE SEU EMAIL" value="joedsron@gmail.com">
+                    <input type="password" name="senha" id="senha" placeholder="DIGITE SUA SENHA" value="root1234">
                     <input type="submit" value="ENTRAR">
                 </form>
                 <p style="color: aliceblue;">Não possui conta ? <a href="{% url 'page_accontCreate' %}" style="color: aqua;">click aqui</a></p>

@@ -41,12 +41,14 @@
             </div>
             <!-- APLICAR A LOGICA : 
                 SE O USUARIO ESTIVER COM ALGUM PLANO TROCAR ESSE BOTÃO PARA O DE TOTAL DE PONTOS -->
+            {% if usuario.status_assinatura.nome == 'Básico' %}
             <a href="{% url 'page_planos' %}">
                 <div
                     style="background-color: #302124; padding: 10px; width: 150px; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
                     <p style="color: #fff;">Seja membro</p>
                 </div>
             </a>
+            {% endif %}
 
         </div>
     </div>
